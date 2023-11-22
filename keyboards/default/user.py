@@ -19,3 +19,14 @@ phone_share = ReplyKeyboardMarkup(
         ]
     ], resize_keyboard=True
 )
+
+admin_menu = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text="📁 Excel olish")
+        ],
+        [
+            KeyboardButton(text="✍ Habar yuborish")
+        ]
+    ], resize_keyboard=True
+)

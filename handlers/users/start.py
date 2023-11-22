@@ -5,7 +5,7 @@ from states.user import RegisterState
 from loader import dp
 from keyboards.default.user import user_menu, phone_share
 from keyboards.inline.user import sharing_referral_def, subs_check
-from utils.check import check_or_add_referral, check_subs
+from utils.check import check_or_add_referral, check_subs, check_weight
 from utils.db_api.user_commands import get_user, add_user
 from main.config import SHARING_CONSTANT
 
@@ -43,29 +43,34 @@ async def get_contact_handler(message: types.Message, state: FSMContext):
 
 @dp.message_handler(state=RegisterState.weight)
 async def get_weight_handler(message: types.Message, state: FSMContext):
-    await state.update_data(weight=message.text, chat_id=message.chat.id, created_at=message.date)
-    data = await state.get_data()
+    if await check_weight(weight=message.text):
+        await state.update_data(weight=message.text, chat_id=message.chat.id, created_at=message.date)
+        data = await state.get_data()
 
-    new_user = await add_user(data)
-    if new_user:
-        text = "✅ Muvafaqqiyatli ro'yxatdan o'tdingiz\nМувафаққиятли рўйхатдан ўтдингиз."
-        await message.answer(text=text, reply_markup=user_menu)
+        new_user = await add_user(data)
+        if new_user:
+            text = "✅ Muvafaqqiyatli ro'yxatdan o'tdingiz\nМувафаққиятли рўйхатдан ўтдингиз."
+            await message.answer(text=text, reply_markup=user_menu)
 
-        result = await check_subs(message)
-        if result:
-            await message.answer(result, disable_web_page_preview=True, reply_markup=subs_check)
+            result = await check_subs(message)
+            if result:
+                await message.answer(result, disable_web_page_preview=True, reply_markup=subs_check)
+            else:
+                link = f"Yaqinlaringiz bilan ulashing\n\n{SHARING_CONSTANT}{message.chat.id}"
+                await message.answer(text=link, reply_markup=await sharing_referral_def(link))
         else:
-            link = f"Yaqinlaringiz bilan ulashing\n\n{SHARING_CONSTANT}{message.chat.id}"
-            await message.answer(text=link, reply_markup=await sharing_referral_def(link))
+            text = ("❌ Botda muommo mavjud. Iltimos bizga aloqaga chiqing.\n"
+                    "Ботда муоммо мавжуд. Илтимос бизга алоқага чиқинг.")
+            await message.answer(text=text, reply_markup=ReplyKeyboardRemove())
+
+        referral_from = data.get('referral_from')
+        if referral_from:
+            await check_or_add_referral(referral_from, message.chat.id)
+
+        await state.finish()
     else:
-        text = ("❌ Botda muommo mavjud. Iltimos bizga aloqaga chiqing.\n"
-                "Ботда муоммо мавжуд. Илтимос бизга алоқага чиқинг.")
-        await message.answer(text=text, reply_markup=ReplyKeyboardRemove())
-
-    referral_from = data.get('referral_from')
-    if referral_from:
-        await check_or_add_referral(referral_from, message.chat.id)
-
-    await state.finish()
+        text = "❌ Iltimos to'g'ri qiymat kiriting\nИлтимос тўғри қиймат киритинг"
+        await message.answer(text=text)
+        await RegisterState.weight.set()
 
 

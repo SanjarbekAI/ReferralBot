@@ -4,7 +4,7 @@ from aiogram import types
 from aiogram.types import ReplyKeyboardRemove
 
 from keyboards.inline.user import subs_check
-from main.config import CHANNELS
+from main.config import CHANNELS, ADMINS
 from utils.misc import subscription
 
 
@@ -12,11 +12,11 @@ class BigBrother(BaseMiddleware):
     async def on_pre_process_update(self, update: types.Update, data: dict):
         if update.message:
             user = update.message.from_user.id
-            if update.message.text in ['/start']:
+            if update.message.text in ['/start'] or str(user) in ADMINS:
                 return
         elif update.callback_query:
             user = update.callback_query.from_user.id
-            if update.callback_query.data == "check_subs":
+            if update.callback_query.data == "check_subs" or str(user) in ADMINS:
                 return
         else:
             return

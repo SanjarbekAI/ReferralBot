@@ -33,3 +33,14 @@ async def check_subs(message):
         return result
     return False
 
+
+async  def check_weight(weight: str):
+    try:
+        weight = float(weight)
+        if 0 > weight > 300:
+            return False
+        return weight
+    except Exception as e:
+        print(e)
+        return False
+

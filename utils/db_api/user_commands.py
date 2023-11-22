@@ -3,6 +3,20 @@ from main.database_set import database
 from main.constants import UserStatus
 
 
+async def get_users():
+    try:
+        query = users.select().where(
+            users.c.status == UserStatus.active
+        )
+        rows = await database.fetch_all(query=query)
+        return rows if rows else False
+    except Exception as e:
+        error_text = f"Error apperead when getting users: {e}"
+        print(error_text)
+        return False
+
+
+
 async def get_user(chat_id: int):
     try:
         query = users.select().where(
@@ -23,6 +37,7 @@ async def add_user(data: dict):
             full_name=data.get("full_name"),
             phone_number=data.get("phone_number"),
             chat_id=data.get("chat_id"),
+            weight=data.get("weight"),
             status=UserStatus.active,
             created_at=data.get("created_at"),
             updated_at=data.get("created_at")
