@@ -62,3 +62,13 @@ async def add_new_referral(referral_from, referral_to):
         print(error_text)
         return False
 
+
+async def get_referrals_count(chat_id: int):
+    try:
+        query = referrals.select().where(referrals.c.referral_from == chat_id)
+        count = await database.fetch_all(query=query)
+        return len(count) if count else 0
+    except Exception as e:
+        error_text = f"Error apperead when getting user: {e}"
+        print(error_text)
+        return 0

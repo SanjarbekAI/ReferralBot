@@ -4,8 +4,8 @@ from aiogram.types import ReplyKeyboardRemove
 from states.user import RegisterState
 from loader import dp
 from keyboards.default.user import user_menu, phone_share
-from keyboards.inline.user import sharing_referral_def
-from utils.check import check_or_add_referral
+from keyboards.inline.user import sharing_referral_def, subs_check
+from utils.check import check_or_add_referral, check_subs
 from utils.db_api.user_commands import get_user, add_user
 from main.config import SHARING_CONSTANT
 
@@ -51,8 +51,12 @@ async def get_weight_handler(message: types.Message, state: FSMContext):
         text = "✅ Muvafaqqiyatli ro'yxatdan o'tdingiz\nМувафаққиятли рўйхатдан ўтдингиз."
         await message.answer(text=text, reply_markup=user_menu)
 
-        link = f"Yaqinlaringiz bilan ulashing\n\n{SHARING_CONSTANT}{message.chat.id}"
-        await message.answer(text=link, reply_markup=await sharing_referral_def(link))
+        result = await check_subs(message)
+        if result:
+            await message.answer(result, disable_web_page_preview=True, reply_markup=subs_check)
+        else:
+            link = f"Yaqinlaringiz bilan ulashing\n\n{SHARING_CONSTANT}{message.chat.id}"
+            await message.answer(text=link, reply_markup=await sharing_referral_def(link))
     else:
         text = ("❌ Botda muommo mavjud. Iltimos bizga aloqaga chiqing.\n"
                 "Ботда муоммо мавжуд. Илтимос бизга алоқага чиқинг.")

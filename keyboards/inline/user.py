@@ -8,3 +8,10 @@ async def sharing_referral_def(link: str):
         ]]
     )
     return sharing_referral
+
+
+subs_check = InlineKeyboardMarkup(
+    inline_keyboard=[[
+        InlineKeyboardButton(text="Tekshirish/Текшириш", callback_data="check_subs")
+    ]]
+)

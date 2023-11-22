@@ -6,6 +6,10 @@ env.read_env()
 BOT_TOKEN = env.str("BOT_TOKEN")
 ADMINS = env.list("ADMINS")
 
+CHANNELS = [
+    ("https://t.me/MyBotTestChannelLink", -1001961644956, "20 KG gacha ozish")
+]
+
 
 DB_USER = env.str("DB_USER")
 DB_PASS = env.str("DB_PASS")
