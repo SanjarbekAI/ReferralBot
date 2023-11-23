@@ -9,7 +9,7 @@ async def get_users():
     try:
         query = users.select().where(
             users.c.status == UserStatus.active
-        )
+        ).order_by(desc(users.c.weight))
         rows = await database.fetch_all(query=query)
         return rows if rows else False
     except Exception as e:
