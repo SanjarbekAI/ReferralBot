@@ -1,3 +1,5 @@
+from sqlalchemy import desc
+
 from main.models import users, referrals
 from main.database_set import database
 from main.constants import UserStatus
@@ -14,7 +16,6 @@ async def get_users():
         error_text = f"Error apperead when getting users: {e}"
         print(error_text)
         return False
-
 
 
 async def get_user(chat_id: int):

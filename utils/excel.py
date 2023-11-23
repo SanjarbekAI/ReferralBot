@@ -3,6 +3,8 @@ from openpyxl.styles import Font, Alignment
 from openpyxl.utils import get_column_letter
 from openpyxl.writer.excel import save_virtual_workbook
 
+from utils.db_api.user_commands import get_referrals_count
+
 
 async def export_users_registered_bot(data):
     wb = Workbook()
@@ -15,10 +17,11 @@ async def export_users_registered_bot(data):
     ws.column_dimensions["A"].width = 30
     ws.column_dimensions["B"].width = 20
     ws.column_dimensions["C"].width = 10
-    ws.column_dimensions["D"].width = 25
+    ws.column_dimensions["D"].width = 20
+    ws.column_dimensions["E"].width = 25
 
     # creating list for excel file column headers
-    headings = ["Ism Familiya", "Telefon raqam", "Vazn", "Ro'xatdan o'tgan vaqti"]
+    headings = ["Ism Familiya", "Telefon raqam", "Vazn", "Referallar soni", "Ro'xatdan o'tgan vaqti"]
     ws.append(headings)
 
     # changing column header text to bold
@@ -45,7 +48,11 @@ async def export_users_registered_bot(data):
 
         current = ws[f"D{i}"]
         current.alignment = Alignment(horizontal='center', vertical='center')
-        ws[f"D{i}"].value = str(user["created_at"])[0:19]
+        ws[f"D{i}"].value = await get_referrals_count(user['chat_id'])
+
+        current = ws[f"E{i}"]
+        current.alignment = Alignment(horizontal='center', vertical='center')
+        ws[f"E{i}"].value = str(user["created_at"])[0:19]
 
         i += 1
     else:
