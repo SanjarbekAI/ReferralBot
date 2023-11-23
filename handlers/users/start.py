@@ -43,8 +43,9 @@ async def get_contact_handler(message: types.Message, state: FSMContext):
 
 @dp.message_handler(state=RegisterState.weight)
 async def get_weight_handler(message: types.Message, state: FSMContext):
-    if await check_weight(weight=message.text):
-        await state.update_data(weight=message.text, chat_id=message.chat.id, created_at=message.date)
+    weight = await check_weight(weight=message.text)
+    if weight:
+        await state.update_data(weight=weight, chat_id=message.chat.id, created_at=message.date)
         data = await state.get_data()
 
         new_user = await add_user(data)

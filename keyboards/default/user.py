@@ -30,3 +30,11 @@ admin_menu = ReplyKeyboardMarkup(
         ]
     ], resize_keyboard=True
 )
+
+back_admin_main_menu = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text="◀ Asosiy menyu"),
+        ]
+    ], resize_keyboard=True
+)

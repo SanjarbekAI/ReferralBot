@@ -1,14 +1,18 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
-from aiogram.types import ReplyKeyboardRemove, InputFile
-from states.user import RegisterState
+from aiogram.types import InputFile
 from loader import dp
-from keyboards.default.user import user_menu, phone_share, admin_menu
-from keyboards.inline.user import sharing_referral_def, subs_check
-from utils.check import check_or_add_referral, check_subs
-from utils.db_api.user_commands import get_user, add_user, get_users
-from main.config import SHARING_CONSTANT, ADMINS
+from keyboards.default.user import admin_menu
+from utils.db_api.user_commands import get_users
+from main.config import ADMINS
 from utils.excel import export_users_registered_bot
+
+
+@dp.message_handler(text="◀ Asosiy menyu️", chat_id=ADMINS, state="*")
+async def back_admin_main_menu_def(message: types.Message, state: FSMContext):
+    await state.finish()
+    text = "Asosiy menyu ga xush keliibsiz."
+    await message.answer(text, reply_markup=admin_menu)
 
 
 @dp.message_handler(commands="start", chat_id=ADMINS)

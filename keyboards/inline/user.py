@@ -15,3 +15,33 @@ subs_check = InlineKeyboardMarkup(
         InlineKeyboardButton(text="Tekshirish/Текшириш", callback_data="check_subs")
     ]]
 )
+
+send_post = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(text="Jo'natish ⏫", callback_data="send_post_yes"),
+            InlineKeyboardButton(text="Bekor qilish ❌", callback_data="send_post_no"),
+        ]
+    ]
+)
+
+image_or_file = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(text="Rasm", callback_data="send_post_image"),
+            InlineKeyboardButton(text="Video", callback_data="send_post_file"),
+        ],
+        [
+            InlineKeyboardButton(text="Text", callback_data="nothing")
+        ]
+    ]
+)
+
+text_or_not = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(text="Ha", callback_data="send_post_text_yes"),
+            InlineKeyboardButton(text="Yo'q", callback_data="send_post_text_no"),
+        ]
+    ]
+)
