@@ -47,7 +47,6 @@ async def admin_start_handler(message: types.Message):
 
 @dp.message_handler(text="📁 Excel olish", chat_id=ADMINS)
 async def admin_get_excel_handler(message: types.Message):
-    print("*******")
     users = await get_users()
     if users:
         excel_file = await export_users_registered_bot(users)
