@@ -4,11 +4,10 @@ from aiogram.types import ReplyKeyboardRemove
 from states.user import RegisterState
 from loader import dp
 from keyboards.default.user import user_menu, phone_share
-from keyboards.inline.user import sharing_referral_def, subs_check
+from keyboards.inline.user import sharing_referral_def, subs_check, start_message_keyboard
 from utils.check import check_or_add_referral, check_subs, check_weight
 from utils.db_api.user_commands import get_user, add_user
 from main.config import SHARING_CONSTANT
-
 
 @dp.message_handler(commands="start", state="*")
 async def bot_start(message: types.Message, state: FSMContext):
@@ -19,9 +18,19 @@ async def bot_start(message: types.Message, state: FSMContext):
         referral_from = message.get_args()
         if referral_from:
             await state.update_data(referral_from=referral_from)
-        text = "Iltimos ism familiyangizni kiriting.\nИлтимос исм фамилиянгизни киритинг."
-        await message.answer(text=text, reply_markup=ReplyKeyboardRemove())
-        await RegisterState.full_name.set()
+
+        text = ("Assalomu alaykum, shifokor Barno Dietolog bilan 3 kun davomida "
+                "amaliyotda ozish chellejida BEPUL ishtirok etish uchun ma'lumotlarni"
+                " aniq kiriting, chunki ANALIZ va DIAGNOSTIKA paytida bu juda ham muhim."
+                " Tayyormisiz?")
+        await message.answer(text=text, reply_markup=start_message_keyboard)
+
+
+@dp.callback_query_handler(text="iam_ready")
+async def iam_ready_handler(call: types.CallbackQuery):
+    text = "Iltimos ism familiyangizni kiriting.\nИлтимос исм фамилиянгизни киритинг."
+    await call.message.answer(text=text, reply_markup=ReplyKeyboardRemove())
+    await RegisterState.full_name.set()
 
 
 @dp.message_handler(state=RegisterState.full_name)

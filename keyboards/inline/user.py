@@ -45,3 +45,10 @@ text_or_not = InlineKeyboardMarkup(
         ]
     ]
 )
+
+
+start_message_keyboard = InlineKeyboardMarkup(
+    inline_keyboard=[[
+        InlineKeyboardButton(text="Tayyorman ✅", callback_data="iam_ready")
+    ]]
+)
