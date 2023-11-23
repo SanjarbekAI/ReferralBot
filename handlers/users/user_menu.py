@@ -8,8 +8,12 @@ from main.config import SHARING_CONSTANT
 
 @dp.message_handler(text="🔗 Maxsus havolam | Махсус ҳаволам")
 async def user_get_referral_handler(message: types.Message):
-    link = f"Yaqinlaringiz bilan ulashing\n\n{SHARING_CONSTANT}{message.chat.id}"
-    await message.answer(text=link, reply_markup=await sharing_referral_def(link))
+    text = ("✅ Sizning maxsus havolangiz. Bu havolani do'stlaringizga yuboring va 10 ta"
+            " ortiqcha vaznga ega do'stingizni taklif qiling. Bu orqali siz shifokor-dietolog"
+            " Barno Suleymanova bilan 3 kunda amaliyotda rostan ham ozish chellenjida "
+            "BEPUL ishtirok eta olasiz 👇")
+    link = f"{SHARING_CONSTANT}{message.chat.id}"
+    await message.answer(text=text, reply_markup=await sharing_referral_def(link))
 
 
 @dp.message_handler(text="🚀 Mening natijam | Менинг натижам")
