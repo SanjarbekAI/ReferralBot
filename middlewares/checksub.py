@@ -12,7 +12,7 @@ class BigBrother(BaseMiddleware):
     async def on_pre_process_update(self, update: types.Update, data: dict):
         if update.message:
             user = update.message.from_user.id
-            if update.message.text in ['/start'] or str(user) in ADMINS:
+            if str(user) in ADMINS:
                 return
         elif update.callback_query:
             user = update.callback_query.from_user.id

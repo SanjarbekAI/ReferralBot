@@ -31,7 +31,6 @@ async def export_users_registered_bot(data):
 
     i = 2
     for user in data:
-        print(user['weight'])
         current = ws[f"A{i}"]
         current.alignment = Alignment(horizontal='center', vertical='center')
         ws[f"A{i}"].value = user["full_name"]

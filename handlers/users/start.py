@@ -10,7 +10,7 @@ from utils.db_api.user_commands import get_user, add_user
 from main.config import SHARING_CONSTANT
 
 
-@dp.message_handler(commands="start")
+@dp.message_handler(commands="start", state="*")
 async def bot_start(message: types.Message, state: FSMContext):
     if await get_user(chat_id=message.chat.id):
         text = "😊 Assalomu alaykum, xush kelibsiz.\nАссалому алайкум, хуш келибсиз."

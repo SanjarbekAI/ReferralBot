@@ -126,39 +126,39 @@ async def send_post_yes(call: CallbackQuery, state: FSMContext):
             if image and text and video is False:
                 for user in users:
                     try:
-                        await asyncio.sleep(0.05)
-                        await bot.send_photo(chat_id=user["telegram_id"], photo=data.get("image"), caption=data.get("text"))
+                        await asyncio.sleep(0.01)
+                        await bot.send_photo(chat_id=user["chat_id"], photo=data.get("image"), caption=data.get("text"))
                     except Exception as exc:
                         print(exc)
             elif text is False and image and video is False:
                 for user in users:
                     try:
-                        await asyncio.sleep(0.05)
-                        await bot.send_photo(chat_id=user["telegram_id"], photo=data.get("image"))
+                        await asyncio.sleep(0.01)
+                        await bot.send_photo(chat_id=user["chat_id"], photo=data.get("image"))
                     except Exception as exc:
                         print(exc)
 
             elif text is False and video and image is False:
                 for user in users:
                     try:
-                        await asyncio.sleep(0.05)
-                        await bot.send_video(chat_id=user["telegram_id"], video=data.get("video"))
+                        await asyncio.sleep(0.01)
+                        await bot.send_video(chat_id=user["chat_id"], video=data.get("video"))
                     except Exception as exc:
                         print(exc)
 
             elif video and text and image is False:
                 for user in users:
                     try:
-                        await asyncio.sleep(0.05)
-                        await bot.send_video(chat_id=user["telegram_id"], video=data.get("video"), caption=data.get("text"))
+                        await asyncio.sleep(0.01)
+                        await bot.send_video(chat_id=user["chat_id"], video=data.get("video"), caption=data.get("text"))
                     except Exception as exc:
                         print(exc)
 
             elif video is False and image is False and text:
                 for user in users:
                     try:
-                        await asyncio.sleep(0.05)
-                        await bot.send_message(chat_id=user["telegram_id"], text=data.get("text"))
+                        await asyncio.sleep(0.01)
+                        await bot.send_message(chat_id=user["chat_id"], text=data.get("text"))
                     except Exception as exc:
                         print(exc)
         else:
