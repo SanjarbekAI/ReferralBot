@@ -66,8 +66,12 @@ async def get_weight_handler(message: types.Message, state: FSMContext):
             if result:
                 await message.answer(result, disable_web_page_preview=True, reply_markup=subs_check)
             else:
-                link = f"Yaqinlaringiz bilan ulashing\n\n{SHARING_CONSTANT}{message.chat.id}"
-                await message.answer(text=link, reply_markup=await sharing_referral_def(link))
+                link = f"{SHARING_CONSTANT}{message.chat.id}"
+                text = ("✅ Sizning maxsus havolangiz. Bu havolani do'stlaringizga yuboring va 10 ta"
+                        " ortiqcha vaznga ega do'stingizni taklif qiling. Bu orqali siz shifokor-dietolog"
+                        " Barno Suleymanova bilan 3 kunda amaliyotda rostan ham ozish chellenjida "
+                        "BEPUL ishtirok eta olasiz 👇")
+                await message.answer(text=text, reply_markup=await sharing_referral_def(link))
         else:
             text = ("❌ Botda muommo mavjud. Iltimos bizga aloqaga chiqing.\n"
                     "Ботда муоммо мавжуд. Илтимос бизга алоқага чиқинг.")
