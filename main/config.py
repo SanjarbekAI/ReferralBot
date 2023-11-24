@@ -11,7 +11,7 @@ ADMINS = env.list("ADMINS")
 # ]
 
 CHANNELS = [
-    ("https://t.me/+t-TanK1xoKgzMjMy", -1002000968173, "20 KG gacha ozish")
+    ("https://t.me/+dWILVEMY2xFkNjY6", -1002001688086, "20 KG gacha ozish")
 ]
 
 DB_USER = env.str("DB_USER")
